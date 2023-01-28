@@ -1,47 +1,36 @@
-import React from 'react'
-import '../styles/App.css';
+import { useState, useEffect } from 'react';
 
-class Odd extends React.Component {
+function App() {
+  const [isOdd, setIsOdd] = useState(false);
 
-  render() {
-    return (
-      <div id="odd">
-        I am odd
-      </div>
-    )
+  function handleButtonClick() {
+    setIsOdd(!isOdd);
   }
+
+  return (
+    <div>
+      <button onClick={handleButtonClick}>Toggle</button>
+      {isOdd ? <Odd /> : <Even />}
+    </div>
+  );
 }
 
-class Even extends React.Component {
+function Odd() {
+  useEffect(() => {
+    return () => {
+      console.log("Odd is unmounted");
+    };
+  }, []);
 
-  render() {
-    return (
-      <div id="even">
-        I am even
-      </div>
-    )
-  }
-}
-class App extends React.Component {
-  handleChange(){
-    this.setState({even: !this.state.even})
-  }
-  constructor(props){
-    super(props)
-    this.state = {even: true}
-    this.handleChange =  this.handleChange.bind(this)
-  }
-  render() {
-    return (
-      <div id="main">
-        {this.state.even ? <Even /> : <Odd />}
-
-        <button id="toggle" onClick={this.handleChange}>Change</button>
-      </div>
-    )
-  }
-
+  return <div>I am Odd</div>;
 }
 
+function Even() {
+  useEffect(() => {
+    return () => {
+      console.log("Even is unmounted");
+    };
+  }, []);
 
-export default App;
+  return <div>I am Even</div>;
+}
